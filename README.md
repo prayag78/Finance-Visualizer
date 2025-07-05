@@ -54,29 +54,3 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 📁 Project Structure
-
-```
-finance/
-├── src/
-│   ├── app/                    # Next.js app directory
-│   │   ├── globals.css         # Global styles
-│   │   ├── layout.js           # Root layout
-│   │   └── page.js             # Home page
-│   ├── components/             # React components
-│   │   ├── ui/                 # Reusable UI components
-│   │   ├── transaction-form.jsx
-│   │   ├── transaction-list.jsx
-│   │   ├── transaction-item.jsx
-│   │   ├── transaction-update-form.jsx
-│   │   └── monthly-charts.jsx
-│   ├── lib/                    # Utility functions
-│   │   ├── actions.js          # Server actions
-│   │   ├── mongodb.js          # Database connection
-│   │   ├── transaction-context.js
-│   │   └── utils.js
-│   └── models/                 # Database models
-│       └── Transaction.js
-├── public/                     # Static assets
-└── package.json
-```
