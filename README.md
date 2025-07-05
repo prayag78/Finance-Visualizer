@@ -10,6 +10,16 @@
 - **Basic form validation** with error handling and user feedback
 - **Responsive design** optimized for mobile, tablet, and desktop
 
+### Stage 2: Categories & Pie chart ✅
+
+- **Predefined categories for transactions** (Food & Dining, Transportation, Shopping, Entertainment, Healthcare, Utilities, Housing, Education, Travel, Other)
+- **Category-wise pie chart** showing spending breakdown by category
+- **Dashboard with summary cards**:
+  - Total expenses overview
+  - Top spending categories
+  - Average transaction amount
+  - Most recent transactions (last 5)
+- **Real-time category analytics** with percentage breakdowns
 
 ## 🚀 Getting Started
 
@@ -53,4 +63,3 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-

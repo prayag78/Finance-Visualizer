@@ -11,6 +11,19 @@ import { toast } from "sonner";
 import { useTransactions } from "@/lib/transaction-context";
 import { addTransaction } from "@/lib/actions";
 
+const CATEGORIES = [
+  "Food & Dining",
+  "Transportation",
+  "Shopping",
+  "Entertainment",
+  "Healthcare",
+  "Utilities",
+  "Housing",
+  "Education",
+  "Travel",
+  "Other",
+];
+
 export function TransactionForm() {
   const { refreshTransactions } = useTransactions();
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +32,7 @@ export function TransactionForm() {
     amount: "",
     date: "",
     description: "",
+    category: "Other",
   });
 
   const [errors, setErrors] = useState({});
@@ -42,12 +56,15 @@ export function TransactionForm() {
       newErrors.description = "Please enter a description";
     }
 
+    if (!formData.category) {
+      newErrors.category = "Please select a category";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
-    //console.log("formData", formData);
     e.preventDefault();
 
     if (!validateForm()) {
@@ -63,6 +80,7 @@ export function TransactionForm() {
       amount: "",
       date: "",
       description: "",
+      category: "Other",
     });
     refreshTransactions();
     setIsLoading(false);
@@ -116,6 +134,31 @@ export function TransactionForm() {
             <p className="text-xs text-destructive">{errors.date}</p>
           )}
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="category" className="text-sm font-medium">
+          Category
+        </Label>
+        <select
+          id="category"
+          value={formData.category}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, category: e.target.value }))
+          }
+          className={`w-full px-3 py-2 border rounded-md text-sm bg-background ${
+            errors.category ? "border-destructive" : "border-input"
+          } focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent`}
+        >
+          {CATEGORIES.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        {errors.category && (
+          <p className="text-xs text-destructive">{errors.category}</p>
+        )}
       </div>
 
       <div className="space-y-2">

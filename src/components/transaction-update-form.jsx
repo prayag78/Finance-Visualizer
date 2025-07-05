@@ -11,6 +11,19 @@ import { toast } from "sonner";
 import { useTransactions } from "@/lib/transaction-context";
 import { updateTransaction } from "@/lib/actions";
 
+const CATEGORIES = [
+  "Food & Dining",
+  "Transportation",
+  "Shopping",
+  "Entertainment",
+  "Healthcare",
+  "Utilities",
+  "Housing",
+  "Education",
+  "Travel",
+  "Other",
+];
+
 export function TransactionUpdateForm({ transaction, onSuccess }) {
   const { refreshTransactions } = useTransactions();
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +32,7 @@ export function TransactionUpdateForm({ transaction, onSuccess }) {
     amount: "",
     date: "",
     description: "",
+    category: "Other",
   });
 
   useEffect(() => {
@@ -29,6 +43,7 @@ export function TransactionUpdateForm({ transaction, onSuccess }) {
           ? new Date(transaction.date).toISOString().split("T")[0]
           : "",
         description: transaction.description || "",
+        category: transaction.category || "Other",
       });
     }
   }, [transaction]);
@@ -98,6 +113,26 @@ export function TransactionUpdateForm({ transaction, onSuccess }) {
             className="text-sm"
           />
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="category" className="text-sm font-medium">
+          Category
+        </Label>
+        <select
+          id="category"
+          value={formData.category}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, category: e.target.value }))
+          }
+          className="w-full px-3 py-2 border rounded-md text-sm bg-background border-input focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
+        >
+          {CATEGORIES.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="space-y-2">
