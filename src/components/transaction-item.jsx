@@ -61,7 +61,7 @@ export function TransactionItem({ transaction, id }) {
   };
 
   return (
-    <div className="min-h-screen hover:shadow-md transition-shadow rounded-lg border border-gray-200 mb-1">
+    <div className="hover:shadow-md transition-shadow rounded-lg border border-gray-200 mb-1">
       <div className="p-3 sm:p-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <div className="flex items-start sm:items-center space-x-3 flex-1 min-w-0">

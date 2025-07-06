@@ -1,17 +1,13 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { TransactionProvider } from "@/lib/transaction-context";
 import Header from "@/components/header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  weight: ["400", "700"],
 });
 
 export const metadata = {
@@ -29,13 +25,14 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full bg-background`}
-      >
-        <Header />
-        <TransactionProvider>{children}</TransactionProvider>
+      <body className={`${spaceGrotesk.className}`}>
+        <TransactionProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+        </TransactionProvider>
         <Toaster position="top-center" />
       </body>
     </html>
   );
 }
+

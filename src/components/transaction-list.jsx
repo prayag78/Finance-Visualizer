@@ -32,7 +32,7 @@ export default function TransactionList() {
   }
 
   return (
-    <div className="space-y-3 sm:space-y-4 max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] overflow-y-auto">
+    <div className="space-y-3 pb-3 sm:space-y-4 max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] overflow-y-auto">
       {transactions.map((transaction) => (
         <TransactionItem
           key={transaction._id}
