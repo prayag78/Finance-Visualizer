@@ -7,19 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useTransactions } from "@/lib/transaction-context";
 import { DollarSign, TrendingUp, Clock, PieChart } from "lucide-react";
 import { getTransactions } from "@/lib/actions";
-
-const CATEGORIES = {
-  "Food & Dining": "#ef4444",
-  Transportation: "#3b82f6",
-  Shopping: "#10b981",
-  Entertainment: "#f59e0b",
-  Healthcare: "#8b5cf6",
-  Utilities: "#06b6d4",
-  Housing: "#84cc16",
-  Education: "#f97316",
-  Travel: "#ec4899",
-  Other: "#6b7280",
-};
+import { CATEGORIES_COLORS } from "@/lib/items";
 
 export default function DashboardSummary() {
   const { transactions, isLoading } = useTransactions();
@@ -159,7 +147,7 @@ export default function DashboardSummary() {
                   key={index}
                   className="text-xs opacity-90 mb-2"
                   style={{
-                    backgroundColor: CATEGORIES[category] || "#ddd",
+                    backgroundColor: CATEGORIES_COLORS[category] || "#ddd",
                     padding: "4px 8px",
                     borderRadius: "4px",
                   }}
@@ -211,7 +199,7 @@ export default function DashboardSummary() {
                       variant="outline"
                       className="text-xs opacity-90"
                       style={{
-                        backgroundColor: CATEGORIES[transaction.category],
+                        backgroundColor: CATEGORIES_COLORS[transaction.category],
                       }}
                     >
                       {transaction.category || "Other"}

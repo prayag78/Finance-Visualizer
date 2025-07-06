@@ -11,20 +11,7 @@ import {
 } from "recharts";
 import { useTransactions } from "@/lib/transaction-context";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const COLORS = [
-  "#ef4444", // red
-  "#3b82f6", // blue
-  "#10b981", // green
-  "#f59e0b", // amber
-  "#8b5cf6", // violet
-  "#06b6d4", // cyan
-  "#84cc16", // lime
-  "#f97316", // orange
-  "#ec4899", // pink
-  "#6b7280", // gray
-];
-
+import { COLORS } from "@/lib/items";
 
 
 export default function CategoryPieChart() {
@@ -35,7 +22,6 @@ export default function CategoryPieChart() {
       return [];
     }
 
-    // Group transactions by category
     const categoryData = transactions.reduce((acc, transaction) => {
       const category = transaction.category || "Other";
       const amount = Math.abs(transaction.amount);
@@ -49,7 +35,6 @@ export default function CategoryPieChart() {
       return acc;
     }, {});
 
-    // Convert to chart format
     return Object.entries(categoryData).map(([name, value], index) => ({
       name,
       value,

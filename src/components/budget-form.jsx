@@ -4,24 +4,20 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
-import { useTransactions } from "@/lib/transaction-context";
-import { addTransaction } from "@/lib/actions";
+import { addBudget } from "@/lib/actions";
 import { CATEGORIES } from "@/lib/items";
 
 
-export function TransactionForm() {
-  const { refreshTransactions } = useTransactions();
+export default function BudgetForm({ onSuccess }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     amount: "",
-    date: "",
-    description: "",
-    category: "Other",
+    category: "Food & Dining",
+    month: new Date().toISOString().slice(0, 7),
   });
 
   const [errors, setErrors] = useState({});
@@ -34,19 +30,15 @@ export function TransactionForm() {
       isNaN(Number(formData.amount)) ||
       Number(formData.amount) <= 0
     ) {
-      newErrors.amount = "Please enter a valid amount greater than 0";
-    }
-
-    if (!formData.date) {
-      newErrors.date = "Please select a date";
-    }
-
-    if (!formData.description.trim()) {
-      newErrors.description = "Please enter a description";
+      newErrors.amount = "Please enter a valid budget amount greater than 0";
     }
 
     if (!formData.category) {
       newErrors.category = "Please select a category";
+    }
+
+    if (!formData.month) {
+      newErrors.month = "Please select a month";
     }
 
     setErrors(newErrors);
@@ -63,17 +55,28 @@ export function TransactionForm() {
     setIsLoading(true);
     setError(null);
 
-    await addTransaction(formData);
-    toast.success("Transaction saved successfully");
-    setFormData({
-      amount: "",
-      date: "",
-      description: "",
-      category: "Other",
-    });
-    refreshTransactions();
-    setIsLoading(false);
-    setError(null);
+    //console.log("formData for budget", formData);
+
+    try {
+      await addBudget({
+        ...formData,
+        amount: Number(formData.amount),
+      });
+      toast.success("Budget set successfully");
+      setFormData({
+        amount: "",
+        category: "Food & Dining",
+        month: new Date().toISOString().slice(0, 7),
+      });
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (error) {
+      setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -88,7 +91,7 @@ export function TransactionForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div className="space-y-2">
           <Label htmlFor="amount" className="text-sm font-medium">
-            Amount
+            Budget Amount
           </Label>
           <Input
             id="amount"
@@ -107,20 +110,20 @@ export function TransactionForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="date" className="text-sm font-medium">
-            Date
+          <Label htmlFor="month" className="text-sm font-medium">
+            Month
           </Label>
           <Input
-            id="date"
-            type="date"
-            value={formData.date}
+            id="month"
+            type="month"
+            value={formData.month}
             onChange={(e) =>
-              setFormData((prev) => ({ ...prev, date: e.target.value }))
+              setFormData((prev) => ({ ...prev, month: e.target.value }))
             }
-            className={`text-sm ${errors.date ? "border-destructive" : ""}`}
+            className={`text-sm ${errors.month ? "border-destructive" : ""}`}
           />
-          {errors.date && (
-            <p className="text-xs text-destructive">{errors.date}</p>
+          {errors.month && (
+            <p className="text-xs text-destructive">{errors.month}</p>
           )}
         </div>
       </div>
@@ -135,10 +138,7 @@ export function TransactionForm() {
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, category: e.target.value }))
           }
-          className={`w-full px-3 py-2 border rounded-md text-sm bg-background ${
-            errors.category ? "border-destructive" : "border-input"
-          } focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent`}
-        >
+          className={`w-full px-3 py-2 border rounded-md text-sm bg-background ${errors.category ? "border-destructive" : "border-input"} focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent`}>
           {CATEGORIES.map((category) => (
             <option key={category} value={category}>
               {category}
@@ -150,33 +150,13 @@ export function TransactionForm() {
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="description" className="text-sm font-medium">
-          Description
-        </Label>
-        <Textarea
-          id="description"
-          placeholder="Enter transaction description..."
-          value={formData.description}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, description: e.target.value }))
-          }
-          className={`text-sm min-h-[80px] sm:min-h-[100px] ${
-            errors.description ? "border-destructive" : ""
-          }`}
-        />
-        {errors.description && (
-          <p className="text-xs text-destructive">{errors.description}</p>
-        )}
-      </div>
-
       <Button
         type="submit"
         disabled={isLoading}
         className="w-full text-sm sm:text-base"
       >
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        Add Transaction
+        Set Budget
       </Button>
     </form>
   );

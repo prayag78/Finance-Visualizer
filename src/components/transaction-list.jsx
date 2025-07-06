@@ -3,7 +3,7 @@
 import { useTransactions } from "@/lib/transaction-context";
 import { TransactionItem } from "@/components/transaction-item";
 
-export function TransactionList() {
+export default function TransactionList() {
   const { transactions, isLoading } = useTransactions();
 
   if (isLoading) {

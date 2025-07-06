@@ -61,7 +61,7 @@ export function TransactionItem({ transaction, id }) {
   };
 
   return (
-      <div className="hover:shadow-md transition-shadow rounded-lg border border-gray-200 mb-1">
+    <div className="min-h-screen hover:shadow-md transition-shadow rounded-lg border border-gray-200 mb-1">
       <div className="p-3 sm:p-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <div className="flex items-start sm:items-center space-x-3 flex-1 min-w-0">
@@ -75,9 +75,14 @@ export function TransactionItem({ transaction, id }) {
                   {transaction.description}
                 </p>
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                {formatDate(transaction.date)}
-              </p>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  {formatDate(transaction.date)}
+                </p>
+                <Badge variant="secondary" className="text-xs">
+                  {transaction.category}
+                </Badge>
+              </div>
             </div>
           </div>
 

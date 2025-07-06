@@ -21,6 +21,13 @@
   - Most recent transactions (last 5)
 - **Real-time category analytics** with percentage breakdowns
 
+### Stage 3: Budget Management & Insights ✅
+
+- **Set monthly category budgets** - Create and manage budget limits for each spending category
+- **Budget vs actual comparison chart** - Visual comparison between planned budgets and actual spending
+- **Simple spending insights** - Get actionable insights about your spending patterns and budget performance
+- **Category-based budget tracking** - Monitor spending against category-specific budget limits
+
 ## 🚀 Getting Started
 
 ### 1. Clone the repository

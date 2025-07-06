@@ -9,6 +9,7 @@ export function TransactionProvider({ children }) {
   const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  
 
   const fetchTransactions = async () => {
     try {

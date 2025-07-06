@@ -10,19 +10,8 @@ import { Loader2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useTransactions } from "@/lib/transaction-context";
 import { updateTransaction } from "@/lib/actions";
+import { CATEGORIES } from "@/lib/items";
 
-const CATEGORIES = [
-  "Food & Dining",
-  "Transportation",
-  "Shopping",
-  "Entertainment",
-  "Healthcare",
-  "Utilities",
-  "Housing",
-  "Education",
-  "Travel",
-  "Other",
-];
 
 export function TransactionUpdateForm({ transaction, onSuccess }) {
   const { refreshTransactions } = useTransactions();
